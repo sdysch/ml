@@ -1,1 +1,1 @@
-Trying to learn basic machine learning in my spare time
+Some old notes that I moved from gitlab

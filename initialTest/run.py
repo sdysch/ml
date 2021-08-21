@@ -1,6 +1,6 @@
 # Load libraries
 import pandas
-from pandas.tools.plotting import scatter_matrix
+from pandas.plotting import scatter_matrix
 import matplotlib.pyplot as plt
 from sklearn import model_selection
 from sklearn.metrics import classification_report
@@ -21,7 +21,7 @@ dataset = pandas.read_csv(url, names = names)
 #print dataset
 
 # summary values
-print dataset.describe()
+print(dataset.describe())
 
 # class distribution
 print(dataset.groupby('class').size())
@@ -59,12 +59,12 @@ models.append(('SVM', SVC(gamma='auto')))
 results = []
 names = []
 for name, model in models:
-    kfold = model_selection.KFold(n_splits=10, random_state=seed)
+    kfold = model_selection.KFold(n_splits=10)
     cv_results = model_selection.cross_val_score(model, X_train, Y_train, cv=kfold, scoring=scoring)
     results.append(cv_results)
     names.append(name)
     msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
-    print msg
+    print(msg)
 
 # Compare Algorithms
 fig = plt.figure()
@@ -72,12 +72,12 @@ fig.suptitle('Algorithm Comparison')
 ax = fig.add_subplot(111)
 plt.boxplot(results)
 ax.set_xticklabels(names)
-#plt.show()
+plt.show()
 
 # Make predictions on validation dataset
 knn = KNeighborsClassifier()
 knn.fit(X_train, Y_train)
 predictions = knn.predict(X_validation)
-print accuracy_score(Y_validation, predictions)
-print confusion_matrix(Y_validation, predictions)
-print classification_report(Y_validation, predictions)
+print(accuracy_score(Y_validation, predictions))
+print(confusion_matrix(Y_validation, predictions))
+print(classification_report(Y_validation, predictions))
